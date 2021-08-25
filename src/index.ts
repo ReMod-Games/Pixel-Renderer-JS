@@ -15,8 +15,10 @@ const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0)
 
 const box = BABYLON.MeshBuilder.CreateBox("box", {}, scene);
 
+scene.render()
+
 setInterval(() => {
-    box.rotate(new BABYLON.Vector3(0, 0, .001), 3);
+    box.rotate(new BABYLON.Vector3(0, 0.1, 0.1), 0.1, BABYLON.Space.LOCAL);
 }, 50)
 
 engine.runRenderLoop(() => {
