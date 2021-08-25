@@ -28,7 +28,10 @@ module.exports = {
             },
             {
                 test: /\.(fragment|vertex)\.fx$/i,
-                type: "asset/resource"
+                type: "asset/resource",
+                generator: {
+                    filename: '[hash].[name].fx'
+                }
             },
             {
                 test: /\.css$/i,

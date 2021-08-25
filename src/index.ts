@@ -1,6 +1,6 @@
 import * as BABYLON from "babylonjs"
 // @ts-ignore
-import thing from "./pixelate.fragment.fx"
+import pixelateFragment from "./pixelate.fragment.fx"
 import '../style/main.css';
 
 const canvas = document.createElement("canvas")
@@ -20,8 +20,8 @@ const box = BABYLON.MeshBuilder.CreateBox("box", {}, scene);
 let screenResolution = new BABYLON.Vector2(window.innerWidth, window.innerHeight)
 let renderResolution = screenResolution.clone().scale(1 / 6)
 let aspectRatio = screenResolution.x / screenResolution.y
-console.log(thing)
-var pixelate = new BABYLON.PostProcess("Pixelate", thing, [ "resolution" ], null, 0.25, camera);
+
+var pixelate = new BABYLON.PostProcess("Pixelate", trimFragmentUrl(pixelateFragment), [ "resolution" ], null, 0.25, camera);
 
 pixelate.onApply = (effect) => {
     effect.setVector4("resolution", new BABYLON.Vector4(
@@ -42,3 +42,7 @@ engine.runRenderLoop(() => {
 window.addEventListener("resize", () => {
     engine.resize();
 });
+
+function trimFragmentUrl(url: string): string {
+    return url.replace(".fragment.fx", "");
+}
