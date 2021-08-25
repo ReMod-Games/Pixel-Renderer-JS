@@ -24,5 +24,8 @@ scene.render()
 
 setInterval(() => {
     box.rotate(new gl.Vector3(0, 0.1, 0.1), 0.01, BABYLON.Space.LOCAL);
-    scene.render()
 }, 10)
+
+engine.runRenderLoop(() => {
+    scene.render();
+});
