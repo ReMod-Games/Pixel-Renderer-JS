@@ -1,5 +1,5 @@
 import * as BABYLON from "babylonjs"
-import "./index.css"
+import '../style/main.css';
 
 const canvas = document.createElement("canvas")
 document.body.append(canvas);
