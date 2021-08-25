@@ -1,37 +1,64 @@
 import * as BABYLON from "babylonjs"
-import pixelateFragment from "./pixelate.fragment.fx"
+import renderPixelateFragment from "../shaders/render-pixelate.fragment.fx"
+import pixelateFragment from "../shaders/pixelate.fragment.fx"
 import '../style/main.css';
+import { Engine, FreeCamera, HemisphericLight, MeshBuilder, PostProcess, RenderTargetTexture, Scene, Space, Vector2, Vector3, Vector4 } from "babylonjs";
 
 const canvas = document.createElement("canvas")
 document.body.append(canvas);
 
-const engine = new BABYLON.Engine(canvas);
-const scene = new BABYLON.Scene(engine)
+const engine = new Engine(canvas);
+const scene = new Scene(engine)
 
-var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 10, 10), scene);
-camera.setTarget(BABYLON.Vector3.Zero());
+var camera = new FreeCamera("camera1", new Vector3(0, 5, 5), scene);
+camera.setTarget(Vector3.Zero());
 camera.attachControl(canvas, true);
 
-const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
-const box = BABYLON.MeshBuilder.CreateBox("box", {}, scene);
+const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
+const box = MeshBuilder.CreateBox("box", {}, scene);
 
 //TODO: recalculate these on resize
-let screenResolution = new BABYLON.Vector2(window.innerWidth, window.innerHeight)
-let renderResolution = screenResolution.clone().scale(1 / 6)
+let screenResolution = new Vector2(window.innerWidth, window.innerHeight)
+let renderResolution = screenResolution.clone().scale(1 / 4)
 let aspectRatio = screenResolution.x / screenResolution.y
 
-var pixelate = new BABYLON.PostProcess("Pixelate", trimFragmentUrl(pixelateFragment), [ "resolution" ], null, 0.25, camera);
+let depthRenderer = scene.enableDepthRenderer();
+
+var renderPixelate = new PostProcess(
+    "Render pixelate", 
+    trimFragmentUrl(renderPixelateFragment), 
+    ["resolution", "tNormal", "tDepth" ],
+    null, 0.25, camera
+)
+var pixelate = new PostProcess("Pixelate", trimFragmentUrl(pixelateFragment), [ "resolution" ], null, 0.25, camera);
+
+let resolution = new Vector4(
+    renderResolution.x, renderResolution.y,
+    1 / renderResolution.x, 1 / renderResolution.y
+)
+
+
+let normalTexture = new RenderTargetTexture(
+    'normalTexture',
+    { width: resolution.x, height: resolution.y },
+    scene
+);
+scene.customRenderTargets.push(normalTexture);
+normalTexture.renderList.push(box)
+
+renderPixelate.onApply = (effect) => {
+    effect.setTexture("tNormal", normalTexture);
+    effect.setTexture("tDepth", depthRenderer.getDepthMap());
+    effect.setVector4("resolution", resolution);
+}
 
 pixelate.onApply = (effect) => {
-    effect.setVector4("resolution", new BABYLON.Vector4(
-        renderResolution.x, renderResolution.y,
-        1 / renderResolution.x, 1 / renderResolution.y
-    ));
+    effect.setVector4("resolution", resolution);
 }
 
 
 setInterval(() => {
-    box.rotate(new BABYLON.Vector3(0, 0.1, 0.1), 0.1, BABYLON.Space.LOCAL);
+    box.rotate(new Vector3(0.1, 0.1, 0.1), 0.1, Space.LOCAL);
 }, 10)
 
 engine.runRenderLoop(() => {
