@@ -3,6 +3,7 @@
 
 # ignore node/grunt dependency directories
 node_modules/
+dist
 
 # ignore Editor files
 *.sublime-project
