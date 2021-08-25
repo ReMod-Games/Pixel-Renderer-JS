@@ -1,0 +1,41 @@
+{
+    "name": "pixel-renderer-js",
+    "version": "0.1.0",
+    "description": "A library to convert 3D Meshes into Pixel Art procedurally generated at runtime using BabylonJS.",
+    "main": "src/index.ts",
+    "scripts": {
+        "test": "echo \"OwO, What's this?\"",
+        "test_webpack": "npm run build:prod && node ./test/test.js",
+        "webpack": "webpack",
+        "dev": "webpack serve --config webpack.development.js",
+        "start": "npm run dev",
+        "build:dev": "webpack --config webpack.development.js",
+        "build:prod": "webpack --config webpack.production.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ReMod-Games/Pixel-Renderer-JS.git"
+    },
+    "author": "ReMod Games",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ReMod-Games/Pixel-Renderer-JS/issues"
+    },
+    "homepage": "https://github.com/ReMod-Games/Pixel-Renderer-JS#readme",
+    "dependencies": {
+        "babylonjs": "^4.2.0",
+        "clean-webpack-plugin": "^4.0.0-alpha.0",
+        "compression-webpack-plugin": "^8.0.1",
+        "html-webpack-plugin": "^5.3.2",
+        "path-browserify": "^1.0.1",
+        "source-map-loader": "^3.0.0",
+        "ts-loader": "^9.2.5",
+        "typescript": "^4.3.5",
+        "webpack": "^5.51.1",
+        "webpack-dev-server": "^4.0.0",
+        "webpack-merge": "^5.8.0"
+    },
+    "devDependencies": {
+        "webpack-cli": "^4.8.0"
+    }
+}
