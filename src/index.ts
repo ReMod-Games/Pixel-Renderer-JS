@@ -1,5 +1,6 @@
 import * as BABYLON from "babylonjs"
-import "./pixelate.fragment.fx"
+// @ts-ignore
+import thing from "./pixelate.fragment.fx"
 import '../style/main.css';
 
 const canvas = document.createElement("canvas")
@@ -16,11 +17,11 @@ const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0)
 const box = BABYLON.MeshBuilder.CreateBox("box", {}, scene);
 
 //TODO: recalculate these on resize
-let screenResolution = new BABYLON.Vector2( window.innerWidth, window.innerHeight )
-let renderResolution = screenResolution.clone().scale(1/6)
+let screenResolution = new BABYLON.Vector2(window.innerWidth, window.innerHeight)
+let renderResolution = screenResolution.clone().scale(1 / 6)
 let aspectRatio = screenResolution.x / screenResolution.y
-
-var pixelate = new BABYLON.PostProcess("Pixelate", "./pixelate", ["resolution"], null, 0.25, camera);
+console.log(thing)
+var pixelate = new BABYLON.PostProcess("Pixelate", thing, [ "resolution" ], null, 0.25, camera);
 
 pixelate.onApply = (effect) => {
     effect.setVector4("resolution", new BABYLON.Vector4(
@@ -31,13 +32,8 @@ pixelate.onApply = (effect) => {
 
 
 setInterval(() => {
-<<<<<<< HEAD
     box.rotate(new BABYLON.Vector3(0, 0.1, 0.1), 0.1, BABYLON.Space.LOCAL);
 }, 10)
-=======
-    box.rotate(new BABYLON.Vector3(0.01, 0, 0.01), 0.05, BABYLON.Space.LOCAL);
-}, 40)
->>>>>>> 34963cd959c72ae426db25a6d82248f8d2e204be
 
 engine.runRenderLoop(() => {
     scene.render();
@@ -45,9 +41,4 @@ engine.runRenderLoop(() => {
 
 window.addEventListener("resize", () => {
     engine.resize();
-<<<<<<< HEAD
 });
-=======
-});
-engine.resize();
->>>>>>> 34963cd959c72ae426db25a6d82248f8d2e204be

@@ -27,16 +27,15 @@ module.exports = {
                 type: "asset/resource",
             },
             {
-<<<<<<< HEAD
                 test: /\.(fragment|vertex)\.fx$/i,
                 type: "asset/resource",
-=======
+            },
+            {
                 test: /\.css$/i,
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader'
                 ]
->>>>>>> 34963cd959c72ae426db25a6d82248f8d2e204be
             },
             {
                 test: /\.tsx?$/,
