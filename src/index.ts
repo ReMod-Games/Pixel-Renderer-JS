@@ -1,6 +1,7 @@
 import * as BABYLON from "babylonjs"
 import pixelateFragment from "./pixelate.fragment.fx"
 import '../style/main.css';
+import { trimFragmentUrl } from "./helper";
 
 const canvas = document.createElement("canvas")
 document.body.append(canvas);
@@ -34,14 +35,5 @@ setInterval(() => {
     box.rotate(new BABYLON.Vector3(0, 0.1, 0.1), 0.1, BABYLON.Space.LOCAL);
 }, 10)
 
-engine.runRenderLoop(() => {
-    scene.render();
-})
-
-window.addEventListener("resize", () => {
-    engine.resize();
-});
-
-function trimFragmentUrl(url: string): string {
-    return url.replace(".fragment.fx", "");
-}
+engine.runRenderLoop(() => scene.render())
+window.addEventListener("resize", () => engine.resize());
