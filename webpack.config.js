@@ -25,6 +25,10 @@ module.exports = {
                 type: "asset/resource",
             },
             {
+                test: /\.(fragment|vertex)\.fx$/i,
+                type: "asset/resource",
+            },
+            {
                 test: /\.tsx?$/,
                 use: "ts-loader",
                 exclude: /node_modules/,
