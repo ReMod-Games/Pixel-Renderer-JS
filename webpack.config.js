@@ -1,5 +1,4 @@
 const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     entry: "./src/index.ts",
@@ -27,10 +26,5 @@ module.exports = {
     },
     devServer: {
         host: 'localhost'
-    },
-    plugins: [
-        new HtmlWebPackPlugin({
-            title: "Pixel Renderer Bundle",
-        }),
-    ],
+    }
 };
