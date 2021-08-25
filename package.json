@@ -5,10 +5,8 @@
     "main": "src/index.ts",
     "scripts": {
         "test": "echo \"OwO, What's this?\"",
-        "webpack": "webpack",
         "start": "webpack serve",
-        "build:dev": "webpack",
-        "build:prod": "webpack --config webpack.production.js"
+        "build": "webpack"
     },
     "repository": {
         "type": "git",
