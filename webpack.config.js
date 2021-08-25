@@ -28,7 +28,7 @@ module.exports = {
             },
             {
                 test: /\.(fragment|vertex)\.fx$/i,
-                type: "asset/resource",
+                type: "asset/resource"
             },
             {
                 test: /\.css$/i,
