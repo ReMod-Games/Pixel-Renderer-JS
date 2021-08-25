@@ -1,6 +1,6 @@
 import * as BABYLON from "babylonjs"
-import "./index.css"
 import "./pixelate.fragment.fx"
+import '../style/main.css';
 
 const canvas = document.createElement("canvas")
 document.body.append(canvas);
@@ -31,8 +31,13 @@ pixelate.onApply = (effect) => {
 
 
 setInterval(() => {
+<<<<<<< HEAD
     box.rotate(new BABYLON.Vector3(0, 0.1, 0.1), 0.1, BABYLON.Space.LOCAL);
 }, 10)
+=======
+    box.rotate(new BABYLON.Vector3(0.01, 0, 0.01), 0.05, BABYLON.Space.LOCAL);
+}, 40)
+>>>>>>> 34963cd959c72ae426db25a6d82248f8d2e204be
 
 engine.runRenderLoop(() => {
     scene.render();
@@ -40,4 +45,9 @@ engine.runRenderLoop(() => {
 
 window.addEventListener("resize", () => {
     engine.resize();
+<<<<<<< HEAD
 });
+=======
+});
+engine.resize();
+>>>>>>> 34963cd959c72ae426db25a6d82248f8d2e204be

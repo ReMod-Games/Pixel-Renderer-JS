@@ -1,5 +1,7 @@
 const path = require("path");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+
 module.exports = {
     entry: "./src/index.ts",
     mode: "development",
@@ -25,24 +27,29 @@ module.exports = {
                 type: "asset/resource",
             },
             {
+<<<<<<< HEAD
                 test: /\.(fragment|vertex)\.fx$/i,
                 type: "asset/resource",
+=======
+                test: /\.css$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader'
+                ]
+>>>>>>> 34963cd959c72ae426db25a6d82248f8d2e204be
             },
             {
                 test: /\.tsx?$/,
                 use: "ts-loader",
                 exclude: /node_modules/,
-            },
-            {
-                test: /\.css$/,
-                use: [
-                  'style-loader',
-                  'css-loader'
-                ]
             }
         ],
     },
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css'
+        }),
         new HtmlWebPackPlugin({
             title: "Pixel Renderer Bundle",
         })
