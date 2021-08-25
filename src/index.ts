@@ -1,5 +1,4 @@
 import * as BABYLON from "babylonjs"
-// @ts-ignore
 import pixelateFragment from "./pixelate.fragment.fx"
 import '../style/main.css';
 

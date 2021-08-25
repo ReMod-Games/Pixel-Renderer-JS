@@ -7,6 +7,10 @@
         "module": "ESNext",
         "sourceMap": true,
         "outDir": "./dist/",
-        "checkJs": true
+        "checkJs": true,
+        "typeRoots": [
+            "./custom.d.ts",
+            "./node_modules/@types"
+        ]
     }
 }
