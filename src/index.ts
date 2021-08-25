@@ -3,6 +3,8 @@ import renderPixelateFragment from "../shaders/render-pixelate.fragment.fx"
 import pixelateFragment from "../shaders/pixelate.fragment.fx"
 import '../style/main.css';
 import { Engine, FreeCamera, HemisphericLight, MeshBuilder, PostProcess, RenderTargetTexture, Scene, Space, Vector2, Vector3, Vector4 } from "babylonjs";
+import exampleImage from "./textures/example.png"
+import { trimFragmentUrl } from "./helper";
 
 const canvas = document.createElement("canvas")
 document.body.append(canvas);
@@ -17,19 +19,23 @@ camera.attachControl(canvas, true);
 const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
 const box = MeshBuilder.CreateBox("box", {}, scene);
 
+var mat = new BABYLON.StandardMaterial("dog", scene);
+mat.diffuseTexture = new BABYLON.Texture(exampleImage, scene);
+box.material = mat;
 //TODO: recalculate these on resize
 let screenResolution = new Vector2(window.innerWidth, window.innerHeight)
 let renderResolution = screenResolution.clone().scale(1 / 4)
 let aspectRatio = screenResolution.x / screenResolution.y
 
 let depthRenderer = scene.enableDepthRenderer();
-
+/*
 var renderPixelate = new PostProcess(
     "Render pixelate", 
     trimFragmentUrl(renderPixelateFragment), 
     ["resolution", "tNormal", "tDepth" ],
     null, 0.25, camera
 )
+*/
 var pixelate = new PostProcess("Pixelate", trimFragmentUrl(pixelateFragment), [ "resolution" ], null, 0.25, camera);
 
 let resolution = new Vector4(
@@ -45,12 +51,13 @@ let normalTexture = new RenderTargetTexture(
 );
 scene.customRenderTargets.push(normalTexture);
 normalTexture.renderList.push(box)
-
+/*
 renderPixelate.onApply = (effect) => {
     effect.setTexture("tNormal", normalTexture);
     effect.setTexture("tDepth", depthRenderer.getDepthMap());
     effect.setVector4("resolution", resolution);
 }
+*/
 
 pixelate.onApply = (effect) => {
     effect.setVector4("resolution", resolution);
@@ -58,17 +65,8 @@ pixelate.onApply = (effect) => {
 
 
 setInterval(() => {
-    box.rotate(new Vector3(0.1, 0.1, 0.1), 0.1, Space.LOCAL);
+    box.rotate(new Vector3(0.1, 0, 0.1), 0.05, Space.LOCAL);
 }, 10)
 
-engine.runRenderLoop(() => {
-    scene.render();
-})
-
-window.addEventListener("resize", () => {
-    engine.resize();
-});
-
-function trimFragmentUrl(url: string): string {
-    return url.replace(".fragment.fx", "");
-}
+engine.runRenderLoop(() => scene.render())
+window.addEventListener("resize", () => engine.resize());
