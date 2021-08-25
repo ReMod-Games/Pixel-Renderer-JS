@@ -21,7 +21,7 @@
     },
     "homepage": "https://github.com/ReMod-Games/Pixel-Renderer-JS#readme",
     "dependencies": {
-        "babylonjs": "^4.2.0"
+        "babylonjs": "^5.0.0-alpha.38"
     },
     "devDependencies": {
         "css-loader": "^6.2.0",

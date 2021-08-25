@@ -1,5 +1,5 @@
 const path = require("path");
-
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
     entry: "./src/index.ts",
     mode: "development",
@@ -7,6 +7,16 @@ module.exports = {
         filename: '[name].js',
         sourceMapFilename: "[name].map",
         path: path.resolve(__dirname, "dist"),
+    },
+    devServer: {
+        host: 'localhost'
+    },
+    experiments: {
+        asyncWebAssembly: true,
+        topLevelAwait: true
+    },
+    resolve: {
+        extensions: [ ".tsx", ".ts", ".js" ],
     },
     module: {
         rules: [
@@ -28,10 +38,9 @@ module.exports = {
             }
         ],
     },
-    resolve: {
-        extensions: [ ".tsx", ".ts", ".js" ],
-    },
-    devServer: {
-        host: 'localhost'
-    }
-};
+    plugins: [
+        new HtmlWebPackPlugin({
+            title: "Pixel Renderer Bundle",
+        })
+    ]
+}
