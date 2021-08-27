@@ -12,12 +12,12 @@ export default class DemoLevelGeometry {
 
         this.addBox(r, boxMat, "bigBox", .4, 0, 0, Math.PI / 4)
         this.addBox(r, boxMat, "smallBox", .2, -.15, -.4, Math.PI / 4)
-    
-        this.addBaseplate(r);
+
+        this.addBaseplate(r)
 
         this.crystalMat = this.makeCrystalMaterial(r)
-        this.crystal = this.addCrystal(r);
-        this.crystal.material = this.crystalMat;
+        this.crystal = this.addCrystal(r)
+        this.crystal.material = this.crystalMat
     }
 
     private makeBoxMaterial(r: PixelRenderer): StandardMaterial {
@@ -28,13 +28,13 @@ export default class DemoLevelGeometry {
     }
 
     animate(delta: number = performance.now() / 1000) {
-        this.crystalMat.emissiveFresnelParameters.power = Math.sin( delta * 3 ) * .5 + .5
-        this.crystal.position.y = .7 + Math.sin( delta * 2 ) * .05
-        this.crystal.rotation.y = (stopGoEased( delta, 2, 4 ) * 2 + 5/6) * Math.PI
+        this.crystalMat.emissiveFresnelParameters.power = Math.sin(delta * 3) * .5 + .5
+        this.crystal.position.y = .7 + Math.sin(delta * 2) * .05
+        this.crystal.rotation.y = (stopGoEased(delta, 2, 4) * 2 + 5 / 6) * Math.PI
     }
 
     private addBox(r: PixelRenderer, mat: StandardMaterial, name: string, len: number, x: number, z: number, rot: number): Mesh {
-        const mesh = MeshBuilder.CreateBox(name, { 
+        const mesh = MeshBuilder.CreateBox(name, {
             size: len,
         }, r.scene)
         mesh.receiveShadows = true
@@ -47,17 +47,17 @@ export default class DemoLevelGeometry {
 
     private addBaseplate(r: PixelRenderer) {
         const planeMat = new StandardMaterial("planeMat", r.scene)
-        planeMat.diffuseTexture = this.makePixelTex(r, DemoLevelGeometry.CHECKERS_TEX, 3);
-        planeMat.specularColor = THREE_JS_DEFAULT_SPECULAR_COLOR; 
-        
+        planeMat.diffuseTexture = this.makePixelTex(r, DemoLevelGeometry.CHECKERS_TEX, 3)
+        planeMat.specularColor = THREE_JS_DEFAULT_SPECULAR_COLOR;
+
         const plane = MeshBuilder.CreatePlane("plane", {
             size: 2,
             sideOrientation: Mesh.DOUBLESIDE
-        }, r.scene);
-        plane.receiveShadows = true;
-        plane.rotation.x = -Math.PI / 2;
-        plane.material = planeMat;
-        r.addShadowCaster(plane);
+        }, r.scene)
+        plane.receiveShadows = true
+        plane.rotation.x = -Math.PI / 2
+        plane.material = planeMat
+        r.addShadowCaster(plane)
     }
 
     private makeCrystalMaterial(r: PixelRenderer): StandardMaterial {
@@ -73,10 +73,10 @@ export default class DemoLevelGeometry {
         const crystal = MeshBuilder.CreatePolyhedron("crystal", {
             type: 3,
             size: .2
-        }, r.scene);
-        crystal.receiveShadows = true;
-        r.addShadowCaster(crystal);
-        return crystal;
+        }, r.scene)
+        crystal.receiveShadows = true
+        r.addShadowCaster(crystal)
+        return crystal
     }
 
     private makePixelTex(r: PixelRenderer, url: string, uScale: number, vScale: number = uScale): Texture {
@@ -89,4 +89,4 @@ export default class DemoLevelGeometry {
     }
 }
 
-const THREE_JS_DEFAULT_SPECULAR_COLOR = Color3.FromHexString("#111111");
+const THREE_JS_DEFAULT_SPECULAR_COLOR = Color3.FromHexString("#111111")
