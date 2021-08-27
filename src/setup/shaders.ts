@@ -1,9 +1,9 @@
 import renderPixelateFragment from "../../shaders/render-pixelate.fragment.fx"
 import pixelateFragment from "../../shaders/pixelate.fragment.fx"
 import { PostProcess, RenderTargetTexture } from "babylonjs";
-import { PixelRenderer } from "..";
+import PixelRenderer from "../PixelRenderer";
 
-export default function (r: PixelRenderer) {
+export default function setupShaders(r: PixelRenderer) {
     const normalTexture = new RenderTargetTexture(
         'normalTexture',
         { width: r.resolutions.resolutionsVector.x, height: r.resolutions.resolutionsVector.y },
