@@ -88,28 +88,25 @@ export class PixelRenderer {
     }
 }
 
-
 function init() {
     const canvas = document.createElement("canvas")
     document.body.append(canvas)
     
     const engine = new Engine(canvas)
     const renderer = new PixelRenderer(engine)
-    const geometry = new DemoLevelGeometry(renderer)
 
     renderer.setup(setupLighting)
+    const geometry = new DemoLevelGeometry(renderer)
+
     renderer.setup(setupShaders)
     renderer.setup(setupMisc)
     renderer.scene.registerBeforeRender(() => geometry.animate())  
 }
 
-import example from "./textures/example.png"
-
-
 class DemoLevelGeometry {
     crystalMat: StandardMaterial
     crystal: Mesh
-    static CHECKERS_TEX: string = example
+    static CHECKERS_TEX: string = "https://threejsfundamentals.org/threejs/resources/images/checker.png"
 
     constructor(r: PixelRenderer) {
         const boxMat = this.makeBoxMaterial(r)
